@@ -12,3 +12,16 @@
 // })
 
 // console.log(redSquare);
+
+
+const colorButtons = document.querySelectorAll(".color-square");
+
+colorButtons.forEach((element) => {
+  element.addEventListener("click", () => {
+    // crear nuevo elemento
+    //añadir clases del elemento clikado
+    //añadir a la seccion current combination
+  })
+})
+
+console.log(colorButtons);

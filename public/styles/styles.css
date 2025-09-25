@@ -1,4 +1,4 @@
-#square-button {
+#square-button, #current-combination {
   display: flex;
   flex-flow: row;
 }
