@@ -18,22 +18,32 @@ const colorButtons = document.querySelectorAll(".color-square");
 const sendCombinationButton = document.getElementById(
   "send-combination-button"
 );
-
+let currentSquareCombination: NodeListOf<Element>;
 colorButtons.forEach((element) => {
   element.addEventListener("click", (e) => {
     // crear nuevo elemento
-
-    const newCurrentCombinationButton: HTMLElement = document.createElement("div");
-
-    //añadir clases del elemento clikado
-    if (e.target instanceof HTMLElement) {
-      e.target.classList.forEach((element) => {
-        newCurrentCombinationButton.classList.add(element)
-      })
+    currentSquareCombination = document.querySelectorAll(".current-square");
+    if(currentSquareCombination.length < 4) {
+       const newCurrentCombinationButton: HTMLElement =
+         document.createElement("div");
+       newCurrentCombinationButton.classList.add("current-square");
+       //añadir clases del elemento clikado
+       console.log(currentSquareCombination.length);
+       if (e.target instanceof HTMLElement) {
+         e.target.classList.forEach((element) => {
+           newCurrentCombinationButton.classList.add(element);
+         });
+       }
+       //añadir a la seccion current combination
+       sendCombinationButton.insertAdjacentElement(
+         "beforebegin",
+         newCurrentCombinationButton
+       );
     }
-    //añadir a la seccion current combination
-    sendCombinationButton.insertAdjacentElement("beforebegin", newCurrentCombinationButton);
+   
   })
-})
 
+  })
+
+  
 console.log(colorButtons);
