@@ -1,49 +1,14 @@
-// const redSquare: HTMLElement = document.getElementById("red-square");
+import { ColorControl } from "./ColorControl.js";
+import { Combination } from "./Combination.js";
+import { Game } from "./Game.js";
 
-// redSquare.addEventListener("click", (e) => {
-//   if(e.target instanceof HTMLElement){
-//       if(e.target.classList.contains("red")){
-//         e.target.classList.replace("red", "green");
-//       } else if (e.target.classList.contains("green")) {
-//            e.target.classList.replace("green", "red");
-//         }
-//   }
-  
-// })
-
-// console.log(redSquare);
+// const maxAttemps = parseInt(prompt("¿Cuántos intentos quieres tener?"));
+// const combinationSize = parseInt(prompt("¿Qué tamaño de combinación quieres para el juego?"));
 
 
-const colorButtons = document.querySelectorAll(".color-square");
-const sendCombinationButton = document.getElementById(
-  "send-combination-button"
-);
-let currentSquareCombination: NodeListOf<Element>;
-colorButtons.forEach((element) => {
-  element.addEventListener("click", (e) => {
-    // crear nuevo elemento
-    currentSquareCombination = document.querySelectorAll(".current-square");
-    if(currentSquareCombination.length < 4) {
-       const newCurrentCombinationButton: HTMLElement =
-         document.createElement("div");
-       newCurrentCombinationButton.classList.add("current-square");
-       //añadir clases del elemento clikado
-       console.log(currentSquareCombination.length);
-       if (e.target instanceof HTMLElement) {
-         e.target.classList.forEach((element) => {
-           newCurrentCombinationButton.classList.add(element);
-         });
-       }
-       //añadir a la seccion current combination
-       sendCombinationButton.insertAdjacentElement(
-         "beforebegin",
-         newCurrentCombinationButton
-       );
-    }
-   
-  })
-
-  })
-
-  
-console.log(colorButtons);
+const currentGame = new Game(10, 4, ["rojo", "amarillo", "azul", "rosa", "verde", "morado"]);
+const currentCombination = new Combination();
+currentGame.availableColor.forEach((element) => {
+  const colorButton = new ColorControl(element, currentCombination);
+})
+console.log(currentGame);
