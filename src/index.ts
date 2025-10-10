@@ -9,6 +9,6 @@ import { Game } from "./Game.js";
 const currentGame = new Game(10, 4, ["rojo", "amarillo", "azul", "rosa", "verde", "morado"]);
 const currentCombination = new Combination();
 currentGame.availableColor.forEach((element) => {
-  const colorButton = new ColorControl(element, currentCombination);
+  const colorButton = new ColorControl(element, currentCombination, currentGame);
 })
 console.log(currentGame);
