@@ -11,6 +11,7 @@ export class CombinationGeneratorControl extends ColorControl {
       if(currentCombination.colors.length < game.combinationSize) {
         const newCurrentCombinationElement: CurrentCombinationControl = new CurrentCombinationControl(color,currentCombination.colors.length, currentCombination, game);
         currentCombination.colors.push(newCurrentCombinationElement);
+        game.changeButtonState(currentCombination)
       }
     })
     }

@@ -13,3 +13,13 @@ currentGame.availableColor.forEach((element) => {
   const colorButton = new CombinationGeneratorControl(element, currentCombination, currentGame);
 })
 console.log(currentGame);
+
+
+
+/*
+1. Habilitar botón de comprobar combinación cuando tenemos 4 colores elegidos (y deshabilitarlo en caso contrario)
+2. Comprobar victoria.
+3. Comprobar derrota.
+4. Añadir combinación histórica.
+5. Dar feedback de la combinación enviada.
+*/

@@ -1,3 +1,5 @@
+import { Combination } from "./Combination.js";
+
 export class Game {
   #maxAttemps: number;
   #combinationSize: number;
@@ -31,7 +33,7 @@ export class Game {
   }
 
   get availableColor(): Array<string> {
-    return this.#availableColor ;
+    return this.#availableColor;
   }
 
   generateTargetCombination(
@@ -39,12 +41,23 @@ export class Game {
     availableColor: Array<string>
   ): Array<string> {
     let targetCombination: Array<string> = [];
-    for(let i = 1; i <= combinationSize; i++) {
-      
+    for (let i = 1; i <= combinationSize; i++) {
       targetCombination.push(
         availableColor[Math.floor(Math.random() * availableColor.length)]
       );
     }
     return targetCombination;
   }
+
+  changeButtonState(currentCombination: Combination) {
+    const button = document.getElementById("send-combination-button");
+    if(currentCombination.colors.length == this.#combinationSize) {
+      // habilitar botón
+      button.removeAttribute("disabled");
+    } else {
+      // deshabilitar
+      button.setAttribute("disabled", "true");
+    }
+  }
+  
 }

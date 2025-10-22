@@ -11,6 +11,7 @@ export class CurrentCombinationControl extends ColorControl {
     this.color.addEventListener("click", () => {
       currentCombination.colors.splice(this.#indexAtCurrentCombination, 1)
       this.color.remove();
+      game.changeButtonState(currentCombination);
     })
     }
 
