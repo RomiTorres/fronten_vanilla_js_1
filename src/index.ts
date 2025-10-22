@@ -12,8 +12,16 @@ const currentCombination = new Combination();
 currentGame.availableColor.forEach((element) => {
   const colorButton = new CombinationGeneratorControl(element, currentCombination, currentGame);
 })
-console.log(currentGame);
 
+document.getElementById("send-combination-button").addEventListener("click", () => {
+  const isPlayerWinner:boolean = currentGame.checkWin(currentCombination);
+  if(isPlayerWinner) 
+  if(!isPlayerWinner) {
+    //currentGame.checkLoose();
+    //currentGame.sendToHostoric();
+    //currentGame.generateFeedback();
+  }
+})
 
 
 /*

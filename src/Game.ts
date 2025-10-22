@@ -1,10 +1,12 @@
+import { ColorControl } from "./ColorControl.js";
 import { Combination } from "./Combination.js";
+import { CurrentCombinationControl } from "./CurrentCombinationControl.js";
 
 export class Game {
   #maxAttemps: number;
   #combinationSize: number;
   #availableColor: Array<string>;
-  #targetCombination: Array<string> = [];
+  #targetCombination: Combination;
 
   constructor(
     maxAttemps: number,
@@ -28,7 +30,7 @@ export class Game {
     return this.#combinationSize;
   }
 
-  get targetCombination(): Array<string> {
+  get targetCombination(): Combination {
     return this.#targetCombination;
   }
 
@@ -39,12 +41,13 @@ export class Game {
   generateTargetCombination(
     combinationSize: number,
     availableColor: Array<string>
-  ): Array<string> {
-    let targetCombination: Array<string> = [];
+  ): Combination {
+    const targetCombination = new Combination();
     for (let i = 1; i <= combinationSize; i++) {
-      targetCombination.push(
+      const newColorControl = new ColorControl(
         availableColor[Math.floor(Math.random() * availableColor.length)]
       );
+      targetCombination.colors = newColorControl;
     }
     return targetCombination;
   }
@@ -58,6 +61,12 @@ export class Game {
       // deshabilitar
       button.setAttribute("disabled", "true");
     }
+  }
+
+  checkWin(currentCombination: Combination): boolean {
+    let isPlayerWinner = false;
+    if(currentCombination.colors == this.#targetCombination.colors) isPlayerWinner = true;
+    return isPlayerWinner;
   }
   
 }
