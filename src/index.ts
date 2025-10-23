@@ -15,10 +15,13 @@ currentGame.availableColor.forEach((element) => {
 
 document.getElementById("send-combination-button").addEventListener("click", () => {
   const isPlayerWinner:boolean = currentGame.checkWin(currentCombination);
-  if(isPlayerWinner) 
+  if(isPlayerWinner) {
+    window.location.href="winner.html";
+  }
   if(!isPlayerWinner) {
     //currentGame.checkLoose();
     //currentGame.sendToHostoric();
+    currentCombination.deleteColors();
     //currentGame.generateFeedback();
   }
 })

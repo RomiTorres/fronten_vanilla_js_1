@@ -49,12 +49,13 @@ export class Game {
       );
       targetCombination.colors = newColorControl;
     }
+    console.log(targetCombination.colors);
     return targetCombination;
   }
 
   changeButtonState(currentCombination: Combination) {
     const button = document.getElementById("send-combination-button");
-    if(currentCombination.colors.length == this.#combinationSize) {
+    if (currentCombination.colors.length == this.#combinationSize) {
       // habilitar botón
       button.removeAttribute("disabled");
     } else {
@@ -63,10 +64,22 @@ export class Game {
     }
   }
 
+  checkCombinationAreEqual(comb1: Combination, comb2: Combination): boolean {
+    let areCombinationEqual = true;
+    for(let  i= 0; i < this.combinationSize; i++) {
+      if(comb1.colors[i].color.classList[0] != comb2.colors[i].color.classList[0]) {
+        areCombinationEqual = false;
+        break;
+      }
+    }
+    
+    return areCombinationEqual;
+  }
+
   checkWin(currentCombination: Combination): boolean {
+    const areCombinationEqual = this.checkCombinationAreEqual(currentCombination, this.targetCombination)
     let isPlayerWinner = false;
-    if(currentCombination.colors == this.#targetCombination.colors) isPlayerWinner = true;
+    if (areCombinationEqual) isPlayerWinner = true;
     return isPlayerWinner;
   }
-  
 }
