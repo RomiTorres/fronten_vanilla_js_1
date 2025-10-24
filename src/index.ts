@@ -3,6 +3,7 @@ import { Combination } from "./Combination.js";
 import { CombinationGeneratorControl } from "./CombinationGeneratorControl.js";
 import { Game } from "./Game.js";
 
+
 // const maxAttemps = parseInt(prompt("¿Cuántos intentos quieres tener?"));
 // const combinationSize = parseInt(prompt("¿Qué tamaño de combinación quieres para el juego?"));
 
@@ -14,13 +15,13 @@ currentGame.availableColor.forEach((element) => {
 })
 
 document.getElementById("send-combination-button").addEventListener("click", () => {
+  currentGame.incrementCurrentAttempt();
   const isPlayerWinner:boolean = currentGame.checkWin(currentCombination);
-  if(isPlayerWinner) {
-    window.location.href="winner.html";
-  }
-  if(!isPlayerWinner) {
-    //currentGame.checkLoose();
-    //currentGame.sendToHostoric();
+  const isPlayerLoser: boolean = (currentGame.currentAttempt == currentGame.maxAttemps && !isPlayerWinner) 
+  if(isPlayerWinner) window.location.href="winner.html";
+  if(isPlayerLoser) window.location.href="loser.html";
+  if(!isPlayerWinner && !isPlayerLoser) {
+    currentCombination.renderToHistoric();
     currentCombination.deleteColors();
     //currentGame.generateFeedback();
   }
@@ -28,9 +29,6 @@ document.getElementById("send-combination-button").addEventListener("click", () 
 
 
 /*
-1. Habilitar botón de comprobar combinación cuando tenemos 4 colores elegidos (y deshabilitarlo en caso contrario)
-2. Comprobar victoria.
-3. Comprobar derrota.
 4. Añadir combinación histórica.
 5. Dar feedback de la combinación enviada.
 */

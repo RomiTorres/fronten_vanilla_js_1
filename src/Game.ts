@@ -7,6 +7,7 @@ export class Game {
   #combinationSize: number;
   #availableColor: Array<string>;
   #targetCombination: Combination;
+  #currentAttempt: number;
 
   constructor(
     maxAttemps: number,
@@ -16,10 +17,9 @@ export class Game {
     this.#maxAttemps = maxAttemps;
     this.#combinationSize = combinationSize;
     this.#availableColor = availableColor;
-    this.#targetCombination = this.generateTargetCombination(
-      combinationSize,
-      availableColor
-    );
+    this.#targetCombination = this.generateTargetCombination(combinationSize, availableColor);
+    this.#currentAttempt = 0;
+    
   }
 
   get maxAttemps(): number {
@@ -38,15 +38,19 @@ export class Game {
     return this.#availableColor;
   }
 
-  generateTargetCombination(
-    combinationSize: number,
-    availableColor: Array<string>
-  ): Combination {
+  get currentAttempt(): number {
+    return this.#currentAttempt;
+  }
+
+
+  incrementCurrentAttempt(): void {
+    this.#currentAttempt++;
+  }
+
+  generateTargetCombination(combinationSize: number, availableColor: Array<string>): Combination {
     const targetCombination = new Combination();
     for (let i = 1; i <= combinationSize; i++) {
-      const newColorControl = new ColorControl(
-        availableColor[Math.floor(Math.random() * availableColor.length)]
-      );
+      const newColorControl = new ColorControl(availableColor[Math.floor(Math.random() * availableColor.length)], "color-square");
       targetCombination.colors = newColorControl;
     }
     console.log(targetCombination.colors);
