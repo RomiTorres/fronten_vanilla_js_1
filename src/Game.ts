@@ -17,9 +17,11 @@ export class Game {
     this.#maxAttemps = maxAttemps;
     this.#combinationSize = combinationSize;
     this.#availableColor = availableColor;
-    this.#targetCombination = this.generateTargetCombination(combinationSize, availableColor);
+    this.#targetCombination = this.generateTargetCombination(
+      combinationSize,
+      availableColor
+    );
     this.#currentAttempt = 0;
-    
   }
 
   get maxAttemps(): number {
@@ -42,15 +44,20 @@ export class Game {
     return this.#currentAttempt;
   }
 
-
   incrementCurrentAttempt(): void {
     this.#currentAttempt++;
   }
 
-  generateTargetCombination(combinationSize: number, availableColor: Array<string>): Combination {
+  generateTargetCombination(
+    combinationSize: number,
+    availableColor: Array<string>
+  ): Combination {
     const targetCombination = new Combination();
     for (let i = 1; i <= combinationSize; i++) {
-      const newColorControl = new ColorControl(availableColor[Math.floor(Math.random() * availableColor.length)], "color-square");
+      const newColorControl = new ColorControl(
+        availableColor[Math.floor(Math.random() * availableColor.length)],
+        "color-square"
+      );
       targetCombination.colors = newColorControl;
     }
     console.log(targetCombination.colors);
@@ -70,42 +77,71 @@ export class Game {
 
   checkCombinationAreEqual(comb1: Combination, comb2: Combination): boolean {
     let areCombinationEqual = true;
-    for(let  i= 0; i < this.combinationSize; i++) {
-      if(comb1.colors[i].color.classList[0] != comb2.colors[i].color.classList[0]) {
+    for (let i = 0; i < this.combinationSize; i++) {
+      if (
+        comb1.colors[i].color.classList[0] != comb2.colors[i].color.classList[0]
+      ) {
         areCombinationEqual = false;
         break;
       }
     }
-    
+
     return areCombinationEqual;
   }
 
   checkWin(currentCombination: Combination): boolean {
-    const areCombinationEqual = this.checkCombinationAreEqual(currentCombination, this.targetCombination)
+    const areCombinationEqual = this.checkCombinationAreEqual(
+      currentCombination,
+      this.targetCombination
+    );
     let isPlayerWinner = false;
     if (areCombinationEqual) isPlayerWinner = true;
     return isPlayerWinner;
   }
 
-  generateFeedback(guessCombination: Combination, targetCombination: Combination): void {
-    let rightPosition: Array<number> = [];
-    console.log(guessCombination)
-    for(let i = 0; i < guessCombination.colors.length; i++) {
-      console.log(guessCombination.colors[i].color.classList[0])
-      console.log(targetCombination.colors[i].color.classList[0])
-      if (guessCombination.colors[i].color.classList[0] == targetCombination.colors[i].color.classList[0]) {
-        rightPosition.push(i);
+  manageRightColorPositions(
+    guess: Array<string>,
+    target: Array<string>
+  ): number {
+    let numberOfRightPosition: number = 0;
+    for (let i = 0; i < guess.length; i++) {
+      if (guess[i] == target[i]) {
+        numberOfRightPosition++;
+        guess.splice(i, 1);
+        target.splice(i, 1);
       }
     }
-    console.log(rightPosition);
+    return numberOfRightPosition;
+  }
+
+  renderRightPosition(qty: number) {
     const newFeedbackContainer = document.createElement("div");
     newFeedbackContainer.classList.add("feedback-container");
-    for(let i = 0; i < rightPosition.length; i++) {
+    for (let i = 0; i < qty; i++) {
       const newFeedbackRightCircle = document.createElement("div");
       newFeedbackRightCircle.classList.add("rojo", "feedback-cirlce");
-      newFeedbackContainer.insertAdjacentElement("afterbegin", newFeedbackRightCircle)
+      newFeedbackContainer.insertAdjacentElement(
+        "afterbegin",
+        newFeedbackRightCircle
+      );
     }
-    const historicContainer = document.getElementsByClassName("historic-container")[0];
+    const historicContainer =
+      document.getElementsByClassName("historic-container")[0];
     historicContainer.insertAdjacentElement("beforeend", newFeedbackContainer);
+  }
+
+  generateFeedback(
+    guessCombination: Combination,
+    targetCombination: Combination
+  ): void {
+    //generar vectores colores
+    let guessColorCombination: Array<string> =
+      guessCombination.createColorStringArrays();
+    let targetColorCombination: Array<string> =
+      targetCombination.createColorStringArrays();
+    // devolver vectores modificados y numeros de posiciones correctas
+    const qtyRightColorPosition = this.manageRightColorPositions(guessColorCombination, targetColorCombination);
+    // pintar
+    this.renderRightPosition(qtyRightColorPosition);
   }
 }

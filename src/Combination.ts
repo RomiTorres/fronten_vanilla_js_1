@@ -35,4 +35,14 @@ export class Combination {
     newHitoricContainer.insertAdjacentElement("afterbegin", newHistoricNode);
     document.getElementById("historic").insertAdjacentElement("afterbegin", newHitoricContainer);
   }
+
+  createColorStringArrays():Array<string> {
+    let colors:Array<string> = [];
+    for(let i = 0; i < this.#colors.length; i++) {
+      colors.push(this.#colors[i].color.classList[0]);
+    }
+
+    return colors;
+  }
+
 }
