@@ -86,4 +86,26 @@ export class Game {
     if (areCombinationEqual) isPlayerWinner = true;
     return isPlayerWinner;
   }
+
+  generateFeedback(guessCombination: Combination, targetCombination: Combination): void {
+    let rightPosition: Array<number> = [];
+    console.log(guessCombination)
+    for(let i = 0; i < guessCombination.colors.length; i++) {
+      console.log(guessCombination.colors[i].color.classList[0])
+      console.log(targetCombination.colors[i].color.classList[0])
+      if (guessCombination.colors[i].color.classList[0] == targetCombination.colors[i].color.classList[0]) {
+        rightPosition.push(i);
+      }
+    }
+    console.log(rightPosition);
+    const newFeedbackContainer = document.createElement("div");
+    newFeedbackContainer.classList.add("feedback-container");
+    for(let i = 0; i < rightPosition.length; i++) {
+      const newFeedbackRightCircle = document.createElement("div");
+      newFeedbackRightCircle.classList.add("rojo", "feedback-cirlce");
+      newFeedbackContainer.insertAdjacentElement("afterbegin", newFeedbackRightCircle)
+    }
+    const historicContainer = document.getElementsByClassName("historic-container")[0];
+    historicContainer.insertAdjacentElement("beforeend", newFeedbackContainer);
+  }
 }
