@@ -109,6 +109,7 @@ export class Game {
         numberOfRightPosition++;
         guess.splice(i, 1);
         target.splice(i, 1);
+        i--;
       }
     }
     return numberOfRightPosition;
